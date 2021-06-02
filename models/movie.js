@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const isURL = require('validator/lib/isURL')
 
-const cardSchema = new mongoose.Schema({
+const movieSchema = new mongoose.Schema({
 
     country: { // country — страна создания фильма.
         type: String, // имя — это строка
@@ -14,6 +14,11 @@ const cardSchema = new mongoose.Schema({
         required: true, // оно должно быть у каждого пользователя, так что  — обязательное поле
         minlength: 2, // минимальная длина имени — 2 символа
         maxlength: 30, // а максимальная — 30 символов
+    },
+    duration: { // director — режиссёр фильма.
+        type: Number, // имя — это строка
+        required: true, // оно должно быть у каждого пользователя, так что  — обязательное поле
+
     },
     year: { // year — год выпуска фильма.
         type: String, // имя — это строка
@@ -62,9 +67,8 @@ const cardSchema = new mongoose.Schema({
     },
 
     movieId: { // movieId — _id фильма, который содержится в ответе сервиса MoviesExplorer.
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'user',
-        required: true,
+        type: Number, // это строка
+        required: true, // оно должно быть у каждого пользователя, так что  — обязательное поле
     },
     nameRU: { // nameRU — название фильма на русском языке.
         type: String, // имя — это строка
@@ -78,4 +82,4 @@ const cardSchema = new mongoose.Schema({
     },
 })
 
-module.exports = mongoose.model('card', cardSchema)
+module.exports = mongoose.model('movie', movieSchema)

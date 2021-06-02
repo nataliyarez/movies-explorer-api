@@ -20,7 +20,7 @@ mongoose.connect('mongodb://localhost:27017/bitfilmsdb', {
     autoIndex: true,
 })
 
-app.use(requestLogger);
+app.use(requestLogger)
 
 app.use('/users', auth, usersRouter)
 app.use('/movies', auth, moviesRouter)
@@ -38,8 +38,11 @@ app.post('/signin', celebrate({
     }),
 }), login)
 
+app.get('*', (req, res, next) => {
+  next(new Error('NotValid'))
+})
 
-app.use(errorLogger);
+app.use(errorLogger)
 
 app.use((err, req, res, next) => {
     if (err.name === 'CastError') {

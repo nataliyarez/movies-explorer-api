@@ -5,6 +5,7 @@ const { check } = require('express-validator')
 const { usersRouter } = require('./routes/users')
 const { moviesRouter } = require('./routes/movies')
 const { login, createUser } = require('./controllers/users')
+const { requestLogger, errorLogger } = require('./middlewares/logger')
 const auth = require('./middlewares/auth')
 
 const { PORT = 3000 } = process.env
@@ -18,6 +19,8 @@ mongoose.connect('mongodb://localhost:27017/bitfilmsdb', {
     useUnifiedTopology: true,
     autoIndex: true,
 })
+
+app.use(requestLogger);
 
 app.use('/users', auth, usersRouter)
 app.use('/movies', auth, moviesRouter)
@@ -34,6 +37,9 @@ app.post('/signin', celebrate({
         password: Joi.string().required().min(8),
     }),
 }), login)
+
+
+app.use(errorLogger);
 
 app.use((err, req, res, next) => {
     if (err.name === 'CastError') {

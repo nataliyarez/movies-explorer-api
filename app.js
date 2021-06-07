@@ -1,14 +1,16 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
+require('dotenv').config();
 
 const { routes } = require('./routes');
 
 const { PORT = 3000 } = process.env;
+const { DB_CONN } = process.env;
 const app = express();
 app.use(express.json());
 
-mongoose.connect('mongodb://localhost:27017/bitfilmsdb', {
+mongoose.connect(DB_CONN, {
   useNewUrlParser: true,
   useCreateIndex: true,
   useFindAndModify: false,
@@ -22,6 +24,7 @@ app.use(routes);
 
 app.use(errorLogger);
 
+// eslint-disable-next-line no-unused-vars
 app.use((err, req, res, next) => {
   if (err.name === 'CastError') {
     res.status(400).send({ message: 'Переданы некоректные данные ' });

@@ -13,7 +13,7 @@ exports.getMovies = (req, res, next) => { //  возвращает все фил
 exports.deleteMovie = (req, res, next) => { // удаляет фильм по идентификатору
   Movie.findById(req.params._id)
     .then((movies) => {
-      if (movies === undefined) {
+      if (movies === null) {
         throw new NotFoundError('NotValid');
       } else if (movies.owner.toString() === req.user._id) {
         Movie.findByIdAndRemove(req.params._id)

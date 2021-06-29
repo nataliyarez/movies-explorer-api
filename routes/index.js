@@ -8,6 +8,8 @@ const auth = require('../middlewares/auth');
 
 const routes = express.Router();
 
+
+
 routes.use('/users', auth, usersRouter);
 routes.use('/movies', auth, moviesRouter);
 routes.post('/signup', [check('email').normalizeEmail()], celebrate({

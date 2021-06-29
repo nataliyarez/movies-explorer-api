@@ -1,14 +1,16 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const cors = require('cors')
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 require('dotenv').config();
 
 const { routes } = require('./routes');
 
-const { PORT = 3000 } = process.env;
-const { DB_CONN } = process.env;
+const { PORT = 3005 } = process.env;
+const { DB_CONN = 'mongodb://localhost:27017/bitfilmsdb' } = process.env;
 const app = express();
 app.use(express.json());
+app.use(cors());
 
 mongoose.connect(DB_CONN, {
   useNewUrlParser: true,
@@ -52,5 +54,5 @@ app.use((err, req, res, next) => {
 });
 
 app.listen(PORT, () => {
-  console.log('App listening on port 3000');
+  console.log('App listening on port 3005');
 });

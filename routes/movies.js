@@ -23,8 +23,8 @@ moviesRouter.post('/', celebrate({
     trailer: Joi.string().required().pattern(new RegExp('^(http[s]?:\\/\\/)?([\\da-z\\.-]+)\\.([a-z\\.]{2,6})\\/?.*?$')),
     thumbnail: Joi.string().required().pattern(new RegExp('^(http[s]?:\\/\\/)?([\\da-z\\.-]+)\\.([a-z\\.]{2,6})\\/?.*?$')),
     movieId: Joi.number().required(),
-    nameRU: Joi.string().regex(/^[. а-яА-Я0-9]+$/).required().min(2),
-    nameEN: Joi.string().regex(/^[. a-zA-Z0-9]+$/).required().min(2),
+    nameRU: Joi.string().regex(/^[.\Wа-яА-Яa-zA-Z0-9]+$/).required().min(2),
+    nameEN: Joi.string().regex(/^[. \Wа-яА-Яa-zA-Z0-9]+$/).required().min(2),
 
   }),
 }), createMovies); // создаёт фильм
